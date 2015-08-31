@@ -42,8 +42,10 @@ if [ "$free_blocks" = "" -a $free_blocks -gt $snap_used ]; then
     exit 1;
 fi;
 
-tar -cpzvf "/backup/${snapshot_volume_name}.tar.gz" /snapshot
-sha256sum "/backup/${snapshot_volume_name}.tar.gz" > "/backup/${snapshot_volume_name}.tar.gz.sha256sum"
+d=`date +"%Y_%m_%d-%H_%M_%S"`
+backup_name="/backup/${snapshot_volume_name}-${d}.tar.gz"
+tar -cpzvf "$backup_name" /snapshot
+sha256sum "$backup_name" > "${backup_name}.sha256sum"
 
 umount /snapshot
 
