@@ -1,0 +1,16 @@
+# Source: https://wiki.archlinux.org/index.php/Create_root_filesystem_snapshots_with_LVM
+[Unit]
+Description=make LVM snapshots
+Requires=local-fs-pre.target
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=local-fs-pre.target
+Before=local-fs.target
+
+[Install]
+WantedBy=make-snapshots.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/snapshot-volume.sh /dev/sg6-vg/sg6-data
+
